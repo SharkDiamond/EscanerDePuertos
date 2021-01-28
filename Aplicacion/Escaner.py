@@ -5,7 +5,7 @@ from tkinter import *
 
 class Aplicacion(PortScanner):
 
-
+	#CONSTRUCTOR
 	def __init__(self):
 
 		self.__ventana =Tk()
@@ -18,7 +18,7 @@ class Aplicacion(PortScanner):
 		self.__ipFormulario=Entry(self.__Frame4)
 		self.__BotonEscaner=Button(self.__Frame4)
 		self.__textoMostrar=Text(self.__Frame4)
-
+		self.__Puertos=Entry(self.__Frame4)
 		self.__barra=Scrollbar(self.__Frame4,command=self.__textoMostrar.yview)
 
 		self.__ConstruyeVentana()
@@ -58,15 +58,19 @@ class Aplicacion(PortScanner):
 		self.__Frame4.pack(side="bottom",pady=10)
 		self.__Frame4.config(bg="#292935",width="400",height="150")
 
-		self.__ipFormulario.place(x=30,y=40)
+		self.__ipFormulario.place(x=30,y=20)
 		self.__ipFormulario.config(text="Mac-Address",bg="#1D1C24",foreground="white")
 		self.__BotonEscaner.config(text="Empezar Escaneo",bg="#4D58DA",foreground="white")
-		self.__BotonEscaner.place(x=30,y=80)
+		self.__BotonEscaner.place(x=30,y=100)
 
 		self.__textoMostrar.place(x=165,y=9)
 		self.__textoMostrar.config(bg="#1D1C24",width=28,height=8,foreground="white")
-
+		self.__Puertos.config(bg="#1D1C24",foreground="white")
+		self.__Puertos.place(x=30,y=60)
 		self.__barra.place(x=375,y=9)
+
+		#Escanear=self.scan(self.__ipFormulario.get(),self.__Puertos.get())
+
 
 
 	def __ConstruyePanelIzquierdo(self):
