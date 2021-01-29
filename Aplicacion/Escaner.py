@@ -1,38 +1,73 @@
-from nmap.nmap import PortScanner
+import nmap
 from tkinter import *
+import requests
 
 
-
-class Aplicacion(PortScanner):
+class Aplicacion():
 
 	#CONSTRUCTOR
 	def __init__(self):
-
+		#CREANDO LA VENTANA
 		self.__ventana =Tk()
+
+		#CREANDO EL PANEL SUPERIOR
 		self.__Frame=Frame()
+
+		#CREANDO EL PANEL IZQUIERDO
 		self.__Frame2=Frame()
+
+		#CREANDO EL PANEL DERECHO
 		self.__Frame3=Frame()
+
+		#CREANDO EL PANEL INFERIOR
 		self.__Frame4=Frame()
+
+		#CREANDO EL FORMULARIO DE LA MAC ADDRESS
 		self.__Mac=Entry(self.__Frame)
+
+		#CREANDO EL LABEL DEL PANEL SUPERIOR DEL RESULTADO
 		self.__Label=Label(self.__Frame)
+
+		#CREANDO EL BOTON DE HACER LA PETICION DEL PANEL SUPERIOR
+		self.__BotonMac=Button(self.__Frame)
+
+		#CREANDO EL FORMULARIO DEL IP DEL PANEL INFERIOR
 		self.__ipFormulario=Entry(self.__Frame4)
+
+		#CREANDO EL BOTON DE ESCANEAR DEL PANEL INFERIOR
 		self.__BotonEscaner=Button(self.__Frame4)
+
+		#CREANDO EL TEXT AREAR DEL PANEL INFERIOR
 		self.__textoMostrar=Text(self.__Frame4)
+
+		#CREANDO EL FORMULARIOR DEL PUERTOS DEL PANEL INFERIOR
 		self.__Puertos=Entry(self.__Frame4)
+
+		#CREANDO LA BARRA DE TEXT AREA
 		self.__barra=Scrollbar(self.__Frame4,command=self.__textoMostrar.yview)
 
+		#CONSTRUYENDO LA VENTANA
 		self.__ConstruyeVentana()
 
 
 	def __ConstruyeVentana(self):
 
-		#Titulo
+		#TITULO
 		self.__ventana.title("Escaner De Puertos")
+
+		#ICONO DE LA VENTANA
 		self.__ventana.iconbitmap("Imagenes/reconocimiento.ico")
+
+		#PARA QUE NO SE MODIFIQUE EL TAMAÑO DE LA VENTANA
 		self.__ventana.resizable(False,False)
+
+		#TAMAÑO DE LA VENTANA
 		self.__ventana.geometry("700x400")
+
+		#COLOR DE FONDO DE LA VENTANA
 		self.__ventana.config(bg="#1D1C24")
 
+		#CONSTRUYENDO INTERFAZ
 		self.__ConstruyePanelDerecho()
 		self.__ConstruyePanelIzquierdo()
 		self.__ConstruyePanelSuperior()
@@ -41,17 +76,44 @@ class Aplicacion(PortScanner):
 		self.__ventana.mainloop()
 
 
+	def __hacerPeticion(self):
+
+		#HACIENDO LA PETICION HACIA LA API DE MAC VENDORS
+		Peticion=requests.get("https://api.macvendors.com/"+self.__Mac.get())
+
+		#SI LA PETICION ES EXITOSA
+		if Peticion.status_code==200:
+
+			#ASIGNANDOLE EL VALOR DEVUELTO POR EL SERVIDOR AL LABEL
+			self.__Label.config(text=Peticion.text,bg="#1D1C24",foreground="white")
+
+		#SI NO ES EXITOSA
+		else:
+
+			self.__Label.config(text="La Peticion no pudo realizarse con exito",bg="#1D1C24",foreground="white")
+
 	def __ConstruyePanelSuperior(self):
 
+		#MARGEN CON LA VENTANA
 		self.__Frame.pack(pady=10)
+
+		#COLOR DE FONDO ANCHO Y ALTO
 		self.__Frame.config(bg="#292935",width="400",height="150")
 
-
+		#UBICACION DEL FORMULARIO DEL MAC ADDRESS
 		self.__Mac.place(x=150,y=20)
-		self.__Mac.config(text="Mac-Address",bg="#1D1C24",foreground="white")
-		self.__Label.place(x=150,y=60)
-		self.__Label.config(text="Mac-Address")
 
+		#COLOR DE FONDO Y DE LETRA
+		self.__Mac.config(bg="#1D1C24",foreground="white")
+
+		#UBICACION DEL RESULTADO
+		self.__Label.place(x=150,y=90)
+
+		#TEXTO COLOR DE FONDO Y DE LETRA DEL BOTON BUSCAR
+		self.__BotonMac.config(text="Buscar",bg="#1D1C24",foreground="white", command=self.__hacerPeticion)
+
+		#UBICACION DEL BOTON BUSCAR
+		self.__BotonMac.place(x=150,y=50)
 
 	def __ConstruyePanelInferior(self):
 
@@ -69,16 +131,11 @@ class Aplicacion(PortScanner):
 		self.__Puertos.place(x=30,y=60)
 		self.__barra.place(x=375,y=9)
 
-		#Escanear=self.scan(self.__ipFormulario.get(),self.__Puertos.get())
-
-
 
 	def __ConstruyePanelIzquierdo(self):
 
 		self.__Frame2.pack(side="left")
 		self.__Frame2.config(bg="#292935",width="100",height="400")
-
-
 
 	def __ConstruyePanelDerecho(self):
 
@@ -87,5 +144,5 @@ class Aplicacion(PortScanner):
 
 
 
+A=Aplicacion()
 
-apli=Aplicacion()
