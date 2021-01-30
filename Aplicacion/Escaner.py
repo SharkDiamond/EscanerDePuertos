@@ -78,19 +78,26 @@ class Aplicacion():
 
 	def __hacerPeticion(self):
 
+		#VALIDANDO DATOS INTRODUCIDOS EN EL FORMULARIO
+		if self.__Mac.get().count(' ')==0 and len(self.__Mac.get())!=0 and len(self.__Mac.get())==17:
+
 		#HACIENDO LA PETICION HACIA LA API DE MAC VENDORS
-		Peticion=requests.get("https://api.macvendors.com/"+self.__Mac.get())
+			Peticion=requests.get("https://api.macvendors.com/"+self.__Mac.get())
 
 		#SI LA PETICION ES EXITOSA
-		if Peticion.status_code==200:
+			if Peticion.status_code==200:
 
 			#ASIGNANDOLE EL VALOR DEVUELTO POR EL SERVIDOR AL LABEL
-			self.__Label.config(text=Peticion.text,bg="#1D1C24",foreground="white")
+				self.__Label.config(text=Peticion.text,bg="#1D1C24",foreground="white")
 
-		#SI NO ES EXITOSA
+		#SI NO ES EXITOSA LA PETICION
+			else:
+
+				self.__Label.config(text="La Peticion no pudo realizarse con exito",bg="#1D1C24",foreground="white")
+	#SI LA VALIDACION DE LOS DATOS DEL FORMULARIO ES ERRONEA
 		else:
 
-			self.__Label.config(text="La Peticion no pudo realizarse con exito",bg="#1D1C24",foreground="white")
+			self.__Label.config(text="MAC ADDRESS MAL INTRODUCIDO",bg="#1D1C24",foreground="white")
 
 	def __ConstruyePanelSuperior(self):
 
