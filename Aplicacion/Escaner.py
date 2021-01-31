@@ -3,7 +3,7 @@ from tkinter import *
 import requests
 
 
-class Aplicacion():
+class Aplicacion(nmap.PortScanner):
 
 	#CONSTRUCTOR
 	def __init__(self):
