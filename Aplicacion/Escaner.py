@@ -99,6 +99,32 @@ class Aplicacion():
 
 			self.__Label.config(text="MAC ADDRESS MAL INTRODUCIDO",bg="#1D1C24",foreground="white")
 
+	def __hacerEscaner(self):
+
+		try:
+
+			Escanear=self.scan(self.__ipFormulario.get(),self.__Puertos.get())
+
+			for EquiposEscaneados in Escanear.all_hosts():
+
+				print("Ip:" + EquiposEscaneados + " /Estado:" + Escanear[EquiposEscaneados].state())
+
+				if Escanear[EquiposEscaneados].state()=="down" or Escanear[EquiposEscaneados].state()=="unknown":
+
+					print("El host esta down no se escanean los puertos")
+
+				elif Escanear[EquiposEscaneados].state()=="up":
+
+					for Puerto in Escanear[EquiposEscaneados]["tcp"].keys():
+
+						for datos in Escanear[EquiposEscaneados]["tcp"][Puerto]:
+
+							print(datos["state"])
+
+		except:
+
+			print("Hubo un problema al hacer el escaneo")
+	
 	def __ConstruyePanelSuperior(self):
 
 		#MARGEN CON LA VENTANA
@@ -129,7 +155,7 @@ class Aplicacion():
 
 		self.__ipFormulario.place(x=30,y=20)
 		self.__ipFormulario.config(text="Mac-Address",bg="#1D1C24",foreground="white")
-		self.__BotonEscaner.config(text="Empezar Escaneo",bg="#4D58DA",foreground="white")
+		self.__BotonEscaner.config(text="Empezar Escaneo",bg="#4D58DA",foreground="white",command=self.__hacerEscaner)
 		self.__BotonEscaner.place(x=30,y=100)
 
 		self.__textoMostrar.place(x=165,y=9)
