@@ -128,7 +128,7 @@ class Aplicacion(nmap.PortScanner):
 
 		except:
 
-			print("Hubo un problema al hacer el escaneo")neados].state()=="up":
+			print("Hubo un problema al hacer el escaneo")
 	
 	def __ConstruyePanelSuperior(self):
 
