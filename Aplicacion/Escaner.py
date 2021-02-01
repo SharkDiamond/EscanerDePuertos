@@ -101,29 +101,34 @@ class Aplicacion(nmap.PortScanner):
 
 	def __hacerEscaner(self):
 
+		
 		try:
 
 			Escanear=self.scan(self.__ipFormulario.get(),self.__Puertos.get())
 
 			for EquiposEscaneados in Escanear.all_hosts():
-
-				print("Ip:" + EquiposEscaneados + " /Estado:" + Escanear[EquiposEscaneados].state())
+				
+				self.__textoMostrar.insert(INSERT,"Ip:" + EquiposEscaneados + " /Estado:" + Escanear[EquiposEscaneados].state())
+				
+				#print("Ip:" + EquiposEscaneados + " /Estado:" + Escanear[EquiposEscaneados].state())
 
 				if Escanear[EquiposEscaneados].state()=="down" or Escanear[EquiposEscaneados].state()=="unknown":
-
-					print("El host esta down no se escanean los puertos")
+					
+					self.__textoMostrar.insert(INSERT,"El host esta down no se escanean los puertos")
+					
+					#print("El host esta down no se escanean los puertos")
 
 				elif Escanear[EquiposEscaneados].state()=="up":
-
+					
 					for Puerto in Escanear[EquiposEscaneados]["tcp"].keys():
 
 						for datos in Escanear[EquiposEscaneados]["tcp"][Puerto]:
-
-							print(datos["state"])
+							self.__textoMostrar.insert(INSERT,"El puerto esta:" + datos["state"])
+							#print(datos["state"])
 
 		except:
 
-			print("Hubo un problema al hacer el escaneo")
+			print("Hubo un problema al hacer el escaneo")neados].state()=="up":
 	
 	def __ConstruyePanelSuperior(self):
 
