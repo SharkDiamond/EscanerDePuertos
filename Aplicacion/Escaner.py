@@ -113,25 +113,25 @@ class Aplicacion(nmap.PortScanner):
 
 	def __hacerEscaner(self):
 
-		
+
 		try:
 
 			Escanear=self.scan(self.__ipFormulario.get(),self.__Puertos.get())
 
 			for EquiposEscaneados in Escanear.all_hosts():
-				
+
 				self.__textoMostrar.insert(INSERT,"Ip:" + EquiposEscaneados + " /Estado:" + Escanear[EquiposEscaneados].state())
-				
+
 				#print("Ip:" + EquiposEscaneados + " /Estado:" + Escanear[EquiposEscaneados].state())
 
 				if Escanear[EquiposEscaneados].state()=="down" or Escanear[EquiposEscaneados].state()=="unknown":
-					
+
 					self.__textoMostrar.insert(INSERT,"El host esta down no se escanean los puertos")
-					
+
 					#print("El host esta down no se escanean los puertos")
 
 				elif Escanear[EquiposEscaneados].state()=="up":
-					
+
 					for Puerto in Escanear[EquiposEscaneados]["tcp"].keys():
 
 						for datos in Escanear[EquiposEscaneados]["tcp"][Puerto]:
@@ -141,7 +141,7 @@ class Aplicacion(nmap.PortScanner):
 		except:
 
 			print("Hubo un problema al hacer el escaneo")
-	
+
 	def __ConstruyePanelSuperior(self):
 
 		#MARGEN CON LA VENTANA
@@ -160,7 +160,7 @@ class Aplicacion(nmap.PortScanner):
 		self.__Label.place(x=150,y=90)
 
 		#TEXTO COLOR DE FONDO Y DE LETRA DEL BOTON BUSCAR
-		self.__BotonMac.config(text="Buscar",bg="#1D1C24",foreground="white", command=self.__hacerPeticion)
+		self.__BotonMac.config(text="Buscar",bg="#44AA2A",foreground="white", command=self.__hacerPeticion)
 
 		#UBICACION DEL BOTON BUSCAR
 		self.__BotonMac.place(x=150,y=50)
@@ -172,7 +172,7 @@ class Aplicacion(nmap.PortScanner):
 
 		self.__ipFormulario.place(x=30,y=20)
 		self.__ipFormulario.config(text="Mac-Address",bg="#1D1C24",foreground="white")
-		self.__BotonEscaner.config(text="Empezar Escaneo",bg="#4D58DA",foreground="white",command=self.__hacerEscaner)
+		self.__BotonEscaner.config(text="Empezar Escaneo",bg="#44AA2A",foreground="white",command=self.__hacerEscaner)
 		self.__BotonEscaner.place(x=30,y=100)
 
 		self.__textoMostrar.place(x=165,y=9)
@@ -183,12 +183,12 @@ class Aplicacion(nmap.PortScanner):
 
 
 	def __ConstruyePanelIzquierdo(self):
-		
+
 		#FRAME IZQUIERDO UBICACION Y MARGEN
 		self.__Frame2.pack(side="left",pady=10)
 		#FRAME COLOR DE FONDO Y TAMAÑO
-		self.__Frame2.config(bg="#292935",width="100",height="400")
-		
+		self.__Frame2.config(bg="#292935",width="140",height="400")
+
 		#FORMULARIO DE DESCRIPCION BREVE COLOR DE FONDO Y DE LETRA
 		self.__descripcionBreve.config(bg="#1D1C24",foreground="white")
 		#FORMULARIO DE DESCRIPCION BREVE UBICACION
@@ -197,14 +197,14 @@ class Aplicacion(nmap.PortScanner):
 		#FORMULARIO DE NOTA COLOR DE FONDO TAMAÑO Y COLOR DE LETRA
 		self.__nota.config(bg="#1D1C24",width=15,height=16,foreground="white")
 		#UBICACION DEL FORMULARIO NOTA
-		self.__nota.place(x=7,y=60)
+		self.__nota.place(x=7,y=50)
 
 		#BOTON DE ENVIAR DEL PANEL IZQUIERDO TEXTO COLOR DE FONDO Y DE LETRA
-		self.__BotonE.config(text="Enviar",bg="#4D58DA",foreground="white")
+		self.__BotonE.config(text="Enviar",bg="#44AA2A",foreground="white")
 		#UBICACION DEL BOTON ENVIAR
-		self.__BotonE.place(x=46,y=340)
-		
-		
+		self.__BotonE.place(x=46,y=330)
+
+
 	def __ConstruyePanelDerecho(self):
 
 		self.__Frame3.pack(side="right")
@@ -213,4 +213,3 @@ class Aplicacion(nmap.PortScanner):
 
 
 A=Aplicacion()
-
