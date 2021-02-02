@@ -185,7 +185,7 @@ class Aplicacion(nmap.PortScanner):
 	def __ConstruyePanelIzquierdo(self):
 		
 		#FRAME IZQUIERDO UBICACION Y MARGEN
-		self.__Frame2.pack(side="left",,pady=10)
+		self.__Frame2.pack(side="left",pady=10)
 		#FRAME COLOR DE FONDO Y TAMAÑO
 		self.__Frame2.config(bg="#292935",width="100",height="400")
 		
