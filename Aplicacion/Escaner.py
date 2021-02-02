@@ -46,6 +46,18 @@ class Aplicacion(nmap.PortScanner):
 		#CREANDO LA BARRA DE TEXT AREA
 		self.__barra=Scrollbar(self.__Frame4,command=self.__textoMostrar.yview)
 
+		#CREANDO LA BARRA DE TEXT AREA
+		self.__barra=Scrollbar(self.__Frame4,command=self.__textoMostrar.yview)
+
+		#CREANDO EL FORMULARIO DE DESCRIPCION BREVE DEL PANEL IZQUIERDO
+		self.__descripcionBreve=Entry(self.__Frame2)
+
+		#CREANDO EL TEXT AREA DE ESCRIBIR NOTA EN EL PANEL IZQUIERDO
+		self.__nota=Text(self.__Frame2)
+
+		#CREANDO EL BOTON DE ENVIAR LA NOTA EN EL PANEL IZQUIERDO
+		self.__BotonE=Button(self.__Frame2)
+
 		#CONSTRUYENDO LA VENTANA
 		self.__ConstruyeVentana()
 
@@ -171,10 +183,28 @@ class Aplicacion(nmap.PortScanner):
 
 
 	def __ConstruyePanelIzquierdo(self):
-
-		self.__Frame2.pack(side="left")
+		
+		#FRAME IZQUIERDO UBICACION Y MARGEN
+		self.__Frame2.pack(side="left",,pady=10)
+		#FRAME COLOR DE FONDO Y TAMAÑO
 		self.__Frame2.config(bg="#292935",width="100",height="400")
+		
+		#FORMULARIO DE DESCRIPCION BREVE COLOR DE FONDO Y DE LETRA
+		self.__descripcionBreve.config(bg="#1D1C24",foreground="white")
+		#FORMULARIO DE DESCRIPCION BREVE UBICACION
+		self.__descripcionBreve.place(x=7,y=20)
 
+		#FORMULARIO DE NOTA COLOR DE FONDO TAMAÑO Y COLOR DE LETRA
+		self.__nota.config(bg="#1D1C24",width=15,height=16,foreground="white")
+		#UBICACION DEL FORMULARIO NOTA
+		self.__nota.place(x=7,y=60)
+
+		#BOTON DE ENVIAR DEL PANEL IZQUIERDO TEXTO COLOR DE FONDO Y DE LETRA
+		self.__BotonE.config(text="Enviar",bg="#4D58DA",foreground="white")
+		#UBICACION DEL BOTON ENVIAR
+		self.__BotonE.place(x=46,y=340)
+		
+		
 	def __ConstruyePanelDerecho(self):
 
 		self.__Frame3.pack(side="right")
