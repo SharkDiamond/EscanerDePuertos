@@ -1,12 +1,27 @@
 import nmap
 from tkinter import *
 import requests
+from pymongo import MongoClient
 
 
 class Aplicacion(nmap.PortScanner):
 
+
 	#CONSTRUCTOR
 	def __init__(self):
+
+		try:
+
+			#CREANDO LA CONEXION CON EL SERVIDOR
+			Cliente=MongoClient("mongodb+srv://GabrielTiburon:wwwaaa12@cluster0practicas.8kyiy.mongodb.net/Notas?retryWrites=true&w=majority")
+
+			#ACCEDIENDO A LA BASE DE DATOS
+			self.__bd=Cliente['Notas']
+
+		except:
+
+			print("hubo un problema para conectarse al servidor de la base de datos")
+
 		#CREANDO LA VENTANA
 		self.__ventana =Tk()
 
@@ -142,6 +157,20 @@ class Aplicacion(nmap.PortScanner):
 
 			print("Hubo un problema al hacer el escaneo")
 
+	def __enviarNota(self):
+
+		try:
+
+			coleccionNotas=self.__db.notas
+
+			datos = {"DescripcionBreve":self.__descripcionBreve.get(),"texto":self.__nota.get()}
+
+			coleccionNotas.insert_one(datos).inserted_id
+
+		except:
+
+			print("hubo un error al enviar la nota")
+
 	def __ConstruyePanelSuperior(self):
 
 		#MARGEN CON LA VENTANA
@@ -200,7 +229,7 @@ class Aplicacion(nmap.PortScanner):
 		self.__nota.place(x=7,y=50)
 
 		#BOTON DE ENVIAR DEL PANEL IZQUIERDO TEXTO COLOR DE FONDO Y DE LETRA
-		self.__BotonE.config(text="Enviar",bg="#44AA2A",foreground="white")
+		self.__BotonE.config(text="Enviar",bg="#44AA2A",foreground="white",command=self.__enviarNota)
 		#UBICACION DEL BOTON ENVIAR
 		self.__BotonE.place(x=46,y=330)
 
