@@ -1,8 +1,15 @@
-import nmap
-from tkinter import *
-import requests
-from pymongo import MongoClient
+#EXEPCION PARA LOS PAQUETES
+try:
+	#PAQUETES
+	import nmap
+	from tkinter import *
+	import requests
+	from pymongo import MongoClient
+	from pymongo import errors
 
+except ImportError:
+
+	print("Hubo un problema importando alguno de los modulos")
 
 class Aplicacion(nmap.PortScanner):
 
@@ -10,7 +17,12 @@ class Aplicacion(nmap.PortScanner):
 	#CONSTRUCTOR
 	def __init__(self):
 
+
+
 		try:
+
+			#IMPORTANDO EL ERROR DE CONEXION FALLIDA
+			raise errors.ConnectionFailure(message="hubo un problema para conectarse al servidor de la base de datos")
 
 			#CREANDO LA CONEXION CON EL SERVIDOR
 			Cliente=MongoClient("mongodb+srv://GabrielTiburon:wwwaaa12@cluster0practicas.8kyiy.mongodb.net/Notas?retryWrites=true&w=majority")
@@ -18,9 +30,18 @@ class Aplicacion(nmap.PortScanner):
 			#ACCEDIENDO A LA BASE DE DATOS
 			self.__bd=Cliente['Notas']
 
-		except:
+			#ASIGNANDO LA CONEXION COMO Verdadera
+			self.__conexion=True
 
-			print("hubo un problema para conectarse al servidor de la base de datos")
+		except errors.ConnectionFailure as test:
+
+			#ASIGNANDO LA CONEXION COMO FALSA
+			self.__conexion=False
+
+			mensaje=test.args[0]
+
+			#IMPRIMIENDO EL MENSAJE
+			print(mensaje)
 
 		#CREANDO LA VENTANA
 		self.__ventana =Tk()
@@ -158,18 +179,25 @@ class Aplicacion(nmap.PortScanner):
 			print("Hubo un problema al hacer el escaneo")
 
 	def __enviarNota(self):
+		#COMPROBANDO SI HAY CONEXION
+		if self.__conexion:
 
-		try:
+			try:
 
-			coleccionNotas=self.__db.notas
+				coleccionNotas=self.__db.notas
 
-			datos = {"DescripcionBreve":self.__descripcionBreve.get(),"texto":self.__nota.get()}
+				datos = {"DescripcionBreve":self.__descripcionBreve.get(),"texto":self.__nota.get()}
 
-			coleccionNotas.insert_one(datos).inserted_id
+				coleccionNotas.insert_one(datos).inserted_id
 
-		except:
+			except:
 
-			print("hubo un error al enviar la nota")
+				print("hubo un error al enviar la nota")
+
+
+		elif self.__conexion==False:
+
+			print("No se puede enviar la nota debido a que no hay conexion con la base de datos")
 
 	def __ConstruyePanelSuperior(self):
 
